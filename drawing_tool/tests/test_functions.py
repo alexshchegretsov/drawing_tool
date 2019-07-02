@@ -102,7 +102,18 @@ class WithoutReturnFunctionsTest(unittest.TestCase):
             draw_into_output(self.canvas)
         m.assert_called_once_with('output.txt', 'a')
 
+    def test_draw_into_output_write_correct_data_to_file(self):
+        draw_into_output(self.canvas)
+        with open('output.txt', 'r') as f:
+            result = f.readlines()
+            given_result = ''.join(result)
+            expected_result = ''
+            for line in self.canvas:
+                expected_result += (''.join(line) + '\n')
 
+        with open('output.txt', 'w'):
+            pass
+        self.assertMultiLineEqual(given_result, expected_result)
 
 
 if __name__ == '__main__':
